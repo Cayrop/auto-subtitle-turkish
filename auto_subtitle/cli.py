@@ -5,7 +5,9 @@ import argparse
 import warnings
 import tempfile
 from transformers import pipeline
+import torch
 from .utils import str2bool, write_srt, filename
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -28,8 +30,8 @@ def main():
     if model_name.endswith(".en"):
         warnings.warn(
             f"{model_name} is an English-only model, forcing English detection.")
-
-    model = whisper.load_model(model_name)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = whisper.load_model(model_name, device=device)
     video_files = get_video_files(directory)
     audios = extract_audio(video_files)
 
