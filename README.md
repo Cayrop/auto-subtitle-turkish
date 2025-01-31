@@ -1,44 +1,49 @@
-# Automatic subtitles in your videos
+# Auto-Subtitle-Turkish
 
-This repository uses `ffmpeg` and [OpenAI's Whisper](https://openai.com/blog/whisper) to automatically generate and overlay subtitles on any video.
+Auto-Subtitle-Turkish, [auto-subtitle](https://github.com/m1guelpf/auto-subtitle) kütüphanesinin bir forkudur ve Türkçe çeviri desteği eklenmiştir. Bu proje, videolar için otomatik altyazı oluşturur ve çevirisini sağlar.
 
-## Installation
+## Özellikler
+- Videolardan altyazı oluşturma
+- OpenAI Whisper modelini kullanarak ses transkripsiyonu
+- Türkçe çeviri desteği (Helsinki-NLP/opus-mt-tc-big-en-tr modeli ile)
+- MP4 ve WEBM formatlarını destekler
 
-To get started, you'll need Python 3.7 or newer. Install the binary by running the following command:
+## Kurulum
+Projeyi kullanabilmek için aşağıdaki adımları takip edin:
 
-    pip install git+https://github.com/m1guelpf/auto-subtitle.git
-
-You'll also need to install [`ffmpeg`](https://ffmpeg.org/), which is available from most package managers:
-
+### pip ile Kurulum
 ```bash
-# on Ubuntu or Debian
-sudo apt update && sudo apt install ffmpeg
-
-# on MacOS using Homebrew (https://brew.sh/)
-brew install ffmpeg
-
-# on Windows using Chocolatey (https://chocolatey.org/)
-choco install ffmpeg
+pip install git+https://github.com/Cayrop/auto-subtitle-turkish.git
 ```
 
-## Usage
+### Bağımlılıkları Yüklenme
+```bash
+pip install -r requirements.txt
+```
+veya
+```bash
+pip install ffmpeg-python openai-whisper transformers sentencepiece numpy==1.26.4
+```
 
-The following command will generate a `subtitled/video.mp4` file contained the input video with overlayed subtitles.
+## Kullanım
+Komut satırından şu şekilde çalıştırabilirsiniz:
+```bash
+auto-subtitle /path/to/videos --translate_to_turkish True
+```
+Bu komut, belirtilen dizindeki tüm videolar için otomatik altyazı oluşturur ve bunları Türkçeye çevirir.
 
-    auto_subtitle /path/to/video.mp4 -o subtitled/
+### Opsiyonel Argümanlar
+- `--model`: Kullanılacak Whisper modeli (varsayılan: large-v3-turbo)
+- `--verbose`: Ayrıntılı hata ayıklama mesajlarını görmek için (varsayılan: False)
+- `--translate_to_turkish`: Altyazıları Türkçeye çevirmek için (varsayılan: True)
 
-The default setting (which selects the `small` model) works well for transcribing English. You can optionally use a bigger model for better results (especially with other languages). The available models are `tiny`, `tiny.en`, `base`, `base.en`, `small`, `small.en`, `medium`, `medium.en`, `large`.
+## Lisans
+Bu proje [MIT Lisansı](LICENSE) altında sunulmuştur.
 
-    auto_subtitle /path/to/video.mp4 --model medium
+## Katkıda Bulunma
+Katkıda bulunmak için repo'yu fork edip, değişikliklerinizi pull request olarak gönderebilirsiniz.
 
-Adding `--task translate` will translate the subtitles into English:
+## Bağlantılar
+- Orijinal proje: [auto-subtitle](https://github.com/m1guelpf/auto-subtitle)
+- Bu fork: [auto-subtitle-turkish](https://github.com/Cayrop/auto-subtitle-turkish)
 
-    auto_subtitle /path/to/video.mp4 --task translate
-
-Run the following to view all available options:
-
-    auto_subtitle --help
-
-## License
-
-This script is open-source and licensed under the MIT License. For more details, check the [LICENSE](LICENSE) file.
